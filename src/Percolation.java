@@ -44,7 +44,7 @@ public class Percolation {
             return true;
         }
 
-        if (n < length && n >= 0 && !seen[n] && grid[n]) {
+        if (!seen[n] && grid[n]) {
             seen[n] = true;
 
             if (n % size == 0) {

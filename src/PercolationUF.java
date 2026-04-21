@@ -48,7 +48,7 @@ public class PercolationUF {
       return true;
     }
 
-    if (n < length && n >= 0 && !seen[n] && grid[n]) {
+    if (!seen[n] && grid[n]) {
       seen[n] = true;
 
       if (n % size == 0) {
@@ -124,76 +124,14 @@ public class PercolationUF {
   }
 
   static void propagateUnion(int x) {
-    int[] neighbours = { x + size, x - size, x + 1, x - 1 };
-    int[] neighbours_left = { x + size, x - size, x + 1 };
-    int[] neighbours_right = { x + size, x - size, x - 1 };
-    int[] neighbours_up = { x + size, x + 1, x - 1 };
-    int[] neighbours_down = { x - size, x + 1, x - 1 };
-    int[] neighbours_zero = { x + size, x + 1 };
-    int[] neighbours_size = { x + size, x - 1 };
-    int[] neighbours_length = { x - size, x - 1 };
-    int[] neighbours_SW = { x - size, x + 1 };
-
-    if (x == 0) {
-      for (int k : neighbours_zero)
-        if (grid[k])
-          UnionFind.union(x, k);
-      return;
-    }
-
-    if (x == size - 1) {
-      for (int k : neighbours_size)
-        if (grid[k])
-          UnionFind.union(x, k);
-      return;
-    }
-
-    if (x == length - size) {
-      for (int k : neighbours_SW)
-        if (grid[k])
-          UnionFind.union(x, k);
-      return;
-    }
-
-    if (x == length) {
-      for (int k : neighbours_length)
-        if (grid[k])
-          UnionFind.union(x, k);
-      return;
-    }
-
-    if (x % size == 0) {
-      for (int k : neighbours_left)
-        if (grid[k])
-          UnionFind.union(x, k);
-      return;
-    }
-
-    if (x % size == size - 1) {
-      for (int k : neighbours_right)
-        if (grid[k])
-          UnionFind.union(x, k);
-      return;
-    }
-
-    if (x / size == 0) {
-      for (int k : neighbours_up)
-        if (grid[k])
-          UnionFind.union(x, k);
-      return;
-    }
-
-    if (x / size == size - 1) {
-      for (int k : neighbours_down)
-        if (grid[k])
-          UnionFind.union(x, k);
-      return;
-    }
-
-    for (int k : neighbours)
-      if (grid[k])
-        UnionFind.union(x, k);
-    return;
+    if (x >= size && grid[x - size])
+      UnionFind.union(x, x - size);
+    if (x < length - size && grid[x + size])
+      UnionFind.union(x, x + size);
+    if (x % size != 0 && grid[x - 1])
+      UnionFind.union(x, x - 1);
+    if (x % size != size - 1 && grid[x + 1])
+      UnionFind.union(x, x + 1);
   }
 
   public static void main(String[] args) {

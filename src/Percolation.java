@@ -13,9 +13,9 @@ public class Percolation {
     static void print() {
         for (int i = 0; i < size; ++i) {
             for (int j = 0; j < size; ++j) {
-                System.out.println(grid[i * size + j] ? "*" : "-");
+                System.out.print(grid[i * size + j] ? "*" : "-");
             }
-            System.out.print("\n");
+            System.out.println();
         }
     }
 
@@ -44,7 +44,7 @@ public class Percolation {
             return true;
         }
 
-        if (n < length && n >= 0 && seen[n] != true && grid[n] == true) {
+        if (n < length && n >= 0 && !seen[n] && grid[n]) {
             seen[n] = true;
 
             if (n % size == 0) {

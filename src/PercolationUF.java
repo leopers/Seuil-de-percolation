@@ -9,7 +9,7 @@ public class PercolationUF {
       grid[i] = false;
     }
 
-    UnionFind.init(length);
+    UnionFind.init(length + 2);
   }
 
   static void print() {
@@ -96,8 +96,12 @@ public class PercolationUF {
     return up && down;
   }
 
+  static boolean isLogPercolation() {
+    return UnionFind.find(0) == UnionFind.find(length + 1);
+  }
+
   static boolean isPercolation(int n) {
-    return isFastPercolation(n);
+    return isLogPercolation();
   }
 
   static double percolation() {
@@ -124,14 +128,19 @@ public class PercolationUF {
   }
 
   static void propagateUnion(int x) {
+    if (x / size == 0)
+      UnionFind.union(x + 1, 0);
+    if (x / size == size - 1)
+      UnionFind.union(x + 1, length + 1);
+
     if (x >= size && grid[x - size])
-      UnionFind.union(x, x - size);
+      UnionFind.union(x + 1, x + 1 - size);
     if (x < length - size && grid[x + size])
-      UnionFind.union(x, x + size);
+      UnionFind.union(x + 1, x + 1 + size);
     if (x % size != 0 && grid[x - 1])
-      UnionFind.union(x, x - 1);
+      UnionFind.union(x + 1, x + 1 - 1);
     if (x % size != size - 1 && grid[x + 1])
-      UnionFind.union(x, x + 1);
+      UnionFind.union(x + 1, x + 1 + 1);
   }
 
   public static void main(String[] args) {

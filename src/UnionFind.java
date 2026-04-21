@@ -67,10 +67,10 @@ public class UnionFind {
   }
 
   static int find(int n) {
-    return fastFind(n);
+    return logFind(n);
   }
 
   static int union(int x, int y) {
-    return fastUnion(x, y);
+    return logUnion(x, y);
   }
 }

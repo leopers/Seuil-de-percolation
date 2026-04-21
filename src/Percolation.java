@@ -1,5 +1,5 @@
 public class Percolation {
-    static int size = 10;
+    static int size = 100;
     static int length = size * size;
 
     static boolean[] grid = new boolean[length];
